@@ -1,24 +1,35 @@
 import React from 'react'
-import { format } from 'date-fns'
+
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { deletePaste } from '../feature/pasteSlice';
 
 const Data = (props) => {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+  const isoString = props.createdAt;
+  const date = new Date(isoString);
+
   
-  const dispatch=useDispatch();
-  const dateString = props.createdAt;
-  const date = new Date(dateString);
-  const formattedDateTime = format(date, 'MMMM d, yyyy h:mm a');
-  function edit(){
+  const day = String(date.getUTCDate()).padStart(2, '0');
+  const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+  const year = date.getUTCFullYear();
+  let hours = date.getUTCHours();
+  const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+  const seconds = String(date.getUTCSeconds()).padStart(2, '0');
+  const amPm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12 || 12;
+  const formattedDateTime = `${month}/${day}/${year} ${hours}:${minutes}:${seconds} ${amPm}`;
+
+  function edit() {
     navigate(`/?pasteId=${props.id}`);
   }
-  function del(){
+  function del() {
     dispatch(deletePaste(props.id));
 
   }
-  function v(){
+  function v() {
     navigate(`/view/${props.id}`);
   }
   return (
@@ -32,21 +43,21 @@ const Data = (props) => {
       </div>
       <div className='flex flex-row gap-4 place-content-evenly'>
         <button className="bg-blue-500 text-white px-7 py-2 rounded hover:bg-blue-600 transition-all duration-500 ease-in-out hover:bg-blue-700 hover:scale-105"
-        onClick={()=>edit()}
+          onClick={() => edit()}
         >Edit</button>
         <button className="bg-blue-500 text-white px-7 py-2 rounded hover:bg-blue-600 transition-all duration-500 ease-in-out hover:bg-blue-700 hover:scale-105"
-        onClick={()=>v()}
+          onClick={() => v()}
         >View</button>
         <button className="bg-blue-500 text-white px-7 py-2 rounded hover:bg-blue-600 transition-all duration-500 ease-in-out hover:bg-blue-700 hover:scale-105"
-        onClick={()=>del()}
+          onClick={() => del()}
         >Delete</button>
-        <button className="bg-blue-500 text-white px-7 py-2 rounded hover:bg-blue-600 transition-all duration-500 ease-in-out hover:bg-blue-700 hover:scale-105" 
-        onClick={props.copy}
+        <button className="bg-blue-500 text-white px-7 py-2 rounded hover:bg-blue-600 transition-all duration-500 ease-in-out hover:bg-blue-700 hover:scale-105"
+          onClick={props.copy}
         >Copy</button>
         <button className="bg-blue-500 text-white px-7 py-2 rounded hover:bg-blue-600 transition-all duration-500 ease-in-out hover:bg-blue-700 hover:scale-105"
-        onClick={props.share}
+          onClick={props.share}
         >Share</button>
-        
+
       </div>
       <p className='p-5'>{formattedDateTime}</p>
     </div>
