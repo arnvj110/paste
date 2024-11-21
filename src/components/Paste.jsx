@@ -7,7 +7,6 @@ const Paste = () => {
   const [search, setSearch] = useState('');
   const pastes = useSelector(state => state.paste.pastes);
   const filterSearch = pastes.filter((paste) => paste.title.toLowerCase().includes(search.toLowerCase()));
-  console.log(filterSearch);
   
   return (
     <div>

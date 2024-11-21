@@ -7,7 +7,7 @@ import ViewPaste from "./components/ViewPaste";
 import Home from "./components/Home";
 import { useState } from "react";
 import EntrySlide from "./components/EntrySlide";
-import { useSelector } from "react-redux";
+
 
 
 function App() {

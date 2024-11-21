@@ -5,10 +5,7 @@ import { useParams } from 'react-router-dom';
 const ViewPaste = () => {
   const pastes=useSelector(state=>state.paste.pastes);
   const params=useParams();
-  console.log(params);
-  console.log(pastes);
   const f = pastes.filter((e) => e._id === params.id);
-  console.log(f);
   return (
     <div className='mt-16'>
       <h1 className='p-10 '>{f.length>0?f[0].title:""}</h1>

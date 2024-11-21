@@ -31,7 +31,6 @@ const Home = () => {
     }
 
     else {
-      console.log("Hi!");
 
       setTitle('');
       setValue('');
